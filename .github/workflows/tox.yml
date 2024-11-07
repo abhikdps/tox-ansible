@@ -18,6 +18,9 @@ concurrency:
 jobs:
   tox:
     uses: abhikdps/team-devtools/.github/workflows/tox.yml@main
+    with:
+      max_python: "3.13"
+      jobs_producing_coverage: 8
 
   tox-matrix:
     runs-on: ubuntu-latest
