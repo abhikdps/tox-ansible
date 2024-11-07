@@ -21,5 +21,5 @@ jobs:
       - name: Install ansible-tox
         run: pip install .
       - name: Run example tests
-        working-directory: example/broken
+        working-directory: foo/bar
         run: tox -e ${{ matrix.type }}-py3.12-2.17 --ansible --conf tox-ansible.ini
