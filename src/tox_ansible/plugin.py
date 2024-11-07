@@ -9,7 +9,6 @@ import os
 import re
 import sys
 import uuid
-import shutil
 
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -34,6 +33,7 @@ if TYPE_CHECKING:
 ALLOWED_EXTERNALS = [
     "bash",
     "cp",
+    "dirname",
     "git",
     "rm",
     "mkdir",
@@ -511,24 +511,22 @@ def conf_commands_pre(
     if in_action():
         group = "echo ::group::Make the galaxy build dir"
         commands.append(group)
-    # commands.append(f"mkdir {galaxy_build_dir}")
-    os.makedirs(galaxy_build_dir, exist_ok=True)
+    commands.append(f"mkdir {galaxy_build_dir}")
     if in_action():
         commands.append(end_group)
 
     if in_action():
         group = "echo ::group::Copy the collection to the galaxy build dir"
         commands.append(group)
-
-    src_dir = TOX_WORK_DIR
-    for item in src_dir.iterdir():
-        dest_path = galaxy_build_dir / item.relative_to(src_dir)
-        if item.is_dir():
-            shutil.copytree(item, dest_path)
-        else:
-            dest_path.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(item, dest_path)
-
+    cd_tox_dir = f"cd {TOX_WORK_DIR}"
+    copy_script = f"""
+        for file in $(git ls-files 2> /dev/null || ls); do
+            mkdir -p {galaxy_build_dir}/$(dirname $file)
+            cp -r $file {galaxy_build_dir}/$file
+        done
+    """
+    full_cmd = f"bash -c '{cd_tox_dir} && {copy_script}'"
+    commands.append(full_cmd)
     if in_action():
         commands.append(end_group)
 
