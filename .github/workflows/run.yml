@@ -62,7 +62,7 @@ jobs:
         run: python3 -m pip install tox-ansible ansible-creator
 
       - name: Scaffold an ansible collection using ansible-creator
-        run: ansible-creator init collection example.broken
+        run: ansible-creator init collection "example.broken"
 
       - name: Run tox test
         run: python3 -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
