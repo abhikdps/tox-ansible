@@ -61,8 +61,12 @@ jobs:
       - name: Install ansible-creator, tox-ansible, includes tox
         run: python3 -m pip install tox-ansible ansible-creator
 
+      - name: Create dir
+        run: mkdir example
+
       - name: Scaffold an ansible collection using ansible-creator
-        run: mkdir example && cd example && ansible-creator init collection "example.broken"
+        working-directory: example
+        run: ansible-creator init collection "example.broken"
 
       - name: Run tox test
         working-directory: example
