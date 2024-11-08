@@ -59,7 +59,10 @@ jobs:
           python-version: ${{ matrix.entry.python }}
 
       - name: Install ansible-creator, tox-ansible, includes tox
-        run: python3 -m pip install tox-ansible ansible-creator
+        run: python3 -m pip install .
+
+      - name: Install ansible-creator
+        run: python3 -m pip install ansible-creator
 
       - name: Create dir
         run: mkdir example
