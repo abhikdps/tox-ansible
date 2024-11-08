@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "main"
+      - "chore/tox_ci"
   pull_request:
     branches:
       - "main"
