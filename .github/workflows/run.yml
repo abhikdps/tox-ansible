@@ -62,6 +62,9 @@ jobs:
       - name: Install tox-ansible, includes tox
         run: python3 -m pip install tox-ansible
 
+      - name: Create tox-ansible.ini file
+        run: touch tox-ansible.ini
+
       - name: Run tox test
         run: python3 -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
         env:
