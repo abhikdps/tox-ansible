@@ -58,11 +58,13 @@ jobs:
         with:
           python-version: ${{ matrix.entry.python }}
 
-      - name: Install tox-ansible, includes tox
-        run: python3 -m pip install tox-ansible
+      - name: Install ansible-creator, tox-ansible, includes tox
+        run: python3 -m pip install tox-ansible ansible-creator
+
+      - name: Scaffold an ansible collection using ansible-creator
+        run: ansible-creator init collection example.broken
 
       - name: Run tox test
-        working-directory: foo/bar
         run: python3 -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
