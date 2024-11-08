@@ -62,9 +62,10 @@ jobs:
         run: python3 -m pip install tox-ansible ansible-creator
 
       - name: Scaffold an ansible collection using ansible-creator
-        run: ansible-creator init collection "example.broken"
+        run: mkdir example && cd example && ansible-creator init collection "example.broken" -o
 
       - name: Run tox test
+        working-directory: example
         run: python3 -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
