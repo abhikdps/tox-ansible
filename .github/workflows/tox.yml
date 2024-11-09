@@ -33,10 +33,12 @@ jobs:
           python-version: "3.11"
 
       - name: Install tox-ansible, includes tox
-        run: python3 -m pip install tox-ansible
+        run: python3 -m pip install .
+
+      - name: Create tox-ansible file
+        run: touch tox-ansible.ini
 
       - name: Generate matrix
-        working-directory: foo/bar
         id: generate-matrix
         run: |
           python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini
@@ -63,7 +65,7 @@ jobs:
         with:
           python-version: ${{ matrix.entry.python }}
 
-      - name: Install ansible-creator, tox-ansible, includes tox
+      - name: Install tox-ansible, includes tox
         run: python3 -m pip install .
 
       - name: Install ansible-creator

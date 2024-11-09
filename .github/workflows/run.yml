@@ -31,7 +31,6 @@ jobs:
         run: python3 -m pip install tox-ansible
 
       - name: Generate matrix
-        working-directory: foo/bar
         id: generate-matrix
         run: |
           python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini
