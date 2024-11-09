@@ -71,9 +71,9 @@ jobs:
         working-directory: example
         run: ansible-creator init collection "example.broken"
 
-      - name: list files in collection
+      - name: Track files created by ansible-creator
         working-directory: example
-        run: ls -lrt
+        run: git add .
 
       - name: Run tox test
         working-directory: example

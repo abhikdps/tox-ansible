@@ -519,21 +519,15 @@ def conf_commands_pre(
     if in_action():
         group = "echo ::group::Copy the collection to the galaxy build dir"
         commands.append(group)
-    commands.append("bash -c 'cd .. && git add . && cd -'")
     cd_tox_dir = f"cd {TOX_WORK_DIR}"
     copy_script = (
         f"for file in $(git ls-files 2> /dev/null || ls); do\n\t"
-        f"echo $file\n\t"
-        f'mkdir -p "{galaxy_build_dir}/$(dirname $file)"\n\t'
-        f'cp -r "$file" "{galaxy_build_dir}/$file"\n'
+        f"mkdir -p {galaxy_build_dir}/$(dirname $file);\n\t"
+        f"cp -r $file {galaxy_build_dir}/$file;\n"
         "done"
     )
     full_cmd = f"bash -c '{cd_tox_dir} && {copy_script}'"
     commands.append(full_cmd)
-    if in_action():
-        commands.append(end_group)
-
-    commands.append(f"ls -lrt {galaxy_build_dir}")
     if in_action():
         commands.append(end_group)
 
