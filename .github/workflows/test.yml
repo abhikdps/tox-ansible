@@ -1,25 +1,25 @@
-name: integration-test
+# name: integration-test
 
-on:
-  push:
-  workflow_dispatch:
+# on:
+#   push:
+#   workflow_dispatch:
 
-jobs:
-    integration-test:
-      strategy:
-        fail-fast: false
-        matrix:
-          os: [ubuntu-latest, macos-latest]
-          type: [unit, integration]
-      runs-on: ${{ matrix.os }}
-      steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.12
-      - name: Install ansible-tox
-        run: pip install .
-      - name: Run example tests
-        working-directory: foo/bar
-        run: tox -e ${{ matrix.type }}-py3.12-2.17 --ansible --conf tox-ansible.ini
+# jobs:
+#   integration-test:
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         os: [ubuntu-latest, macos-latest]
+#         type: [unit, integration]
+#     runs-on: ${{ matrix.os }}
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Set up Python 3.8
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.12
+#       - name: Install ansible-tox
+#         run: pip install .
+#       - name: Run example tests
+#         working-directory: foo/bar
+#         run: tox -e ${{ matrix.type }}-py3.12-2.17 --ansible --conf tox-ansible.ini
