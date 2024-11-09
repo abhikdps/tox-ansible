@@ -39,6 +39,7 @@ ALLOWED_EXTERNALS = [
     "mkdir",
     "cd",
     "echo",
+    "ls",
 ]
 ENV_LIST = """
 {integration, sanity, unit}-py3.9-{2.15}
@@ -527,6 +528,10 @@ def conf_commands_pre(
     )
     full_cmd = f"bash -c '{cd_tox_dir} && {copy_script}'"
     commands.append(full_cmd)
+    if in_action():
+        commands.append(end_group)
+
+    commands.append(f"ls -lrt {galaxy_build_dir}")
     if in_action():
         commands.append(end_group)
 
