@@ -519,7 +519,7 @@ def conf_commands_pre(
     if in_action():
         group = "echo ::group::Copy the collection to the galaxy build dir"
         commands.append(group)
-    commands.append("git ls-files 2>/dev/null || ls")
+    commands.append("ls -lrt")
     if in_action():
         commands.append(end_group)
     cd_tox_dir = f"cd {TOX_WORK_DIR}"

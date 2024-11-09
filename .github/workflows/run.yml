@@ -71,6 +71,10 @@ jobs:
         working-directory: example
         run: ansible-creator init collection "example.broken"
 
+      - name: list files in collection
+        working-directory: example
+        run: ls -lrt
+
       - name: Run tox test
         working-directory: example
         run: python3 -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
