@@ -2,7 +2,6 @@
 
 # Variables
 COLLECTION_NAME=$1
-COLLECTION_DIR="example/$COLLECTION_NAME"
 
 # Install ansible-creator if not already installed
 if ! command -v ansible-creator &> /dev/null
@@ -19,7 +18,8 @@ pwd
 ls -lrt
 
 # Initialize a new Git repository for the collection
-cd "$COLLECTION_DIR" || exit 1
+mkdir "$COLLECTION_NAME" || exit 1
+cd "$COLLECTION_NAME" || exit 1
 git init
 git add .
 git commit -m "Initial commit for $COLLECTION_NAME collection"
