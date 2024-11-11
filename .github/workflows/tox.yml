@@ -78,6 +78,7 @@ jobs:
         run: mkdir example
 
       - name: Make script executable
+        working-directory: tools
         run: chmod +x create_collection.sh
 
       - name: Run Collection creation script
