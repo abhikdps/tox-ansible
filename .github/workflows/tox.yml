@@ -74,9 +74,6 @@ jobs:
         with:
           python-version: ${{ matrix.entry.python }}
 
-      - name: Create example directory
-        run: mkdir example
-
       - name: Make script executable
         working-directory: tools
         run: chmod +x create_collection.sh
@@ -86,7 +83,7 @@ jobs:
         run: ./create_collection.sh example.broken
 
       - name: Run tox test
-        working-directory: tools/example
+        working-directory: tools
         run: python3 -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

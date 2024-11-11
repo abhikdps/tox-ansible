@@ -20,9 +20,7 @@ ls -lrt
 # Initialize a new Git repository for the collection
 mkdir "$COLLECTION_NAME" || exit 1
 cd "$COLLECTION_NAME" || exit 1
-git init
 git add .
-git commit -m "Initial commit for $COLLECTION_NAME collection"
 
 # Move back to the root directory
 cd - || exit 1
@@ -30,4 +28,4 @@ cd - || exit 1
 # Add the collection repo to .gitignore
 echo "$COLLECTION_DIR" >> .gitignore
 
-echo "Collection $COLLECTION_NAME has been created, initialized as a new git repo, and added to .gitignore"
+echo "Collection $COLLECTION_NAME has been created and added to .gitignore"
