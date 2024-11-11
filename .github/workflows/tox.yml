@@ -77,6 +77,9 @@ jobs:
       - name: Create example directory
         run: mkdir example
 
+      - name: Make script executable
+        run: chmod +x create_collection.sh
+
       - name: Run Collection creation script
         working-directory: tools
         run: ./create_collection.sh example.broken
