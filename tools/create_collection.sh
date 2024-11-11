@@ -14,6 +14,10 @@ fi
 # Create an Ansible collection
 ansible-creator init collection "$COLLECTION_NAME" || exit 1
 
+pwd
+
+ls -lrt
+
 # Initialize a new Git repository for the collection
 cd "$COLLECTION_DIR" || exit 1
 git init
