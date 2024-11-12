@@ -5,6 +5,7 @@ set -e
 
 # ARGUMENTS
 COLLECTION_NAME=$1
+MATRIX=$2
 
 # Install pyenv if not present
 if ! command -v pyenv > /dev/null; then
@@ -33,13 +34,14 @@ cd example
 ansible-creator init collection "$COLLECTION_NAME"
 git add .
 
-python3 -m tox --ansible -e integration-py3.11-2.16 --conf tox-ansible.ini
-
 # Generate matrix with tox
-echo "Generating matrix..."
-MATRIX=$(python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini)
-
-echo "matrix: $MATRIX"
+if [[ -z "$MATRIX" ]]; then
+    echo "Generating matrix..."
+    MATRIX=$(python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini)
+    echo "matrix: $MATRIX"
+else
+    echo "matrix: $MATRIX"
+fi
 
 # Parse JSON to create arrays for entries
 ENTRIES=($(echo "$MATRIX" | jq -r '.[] | .name'))
