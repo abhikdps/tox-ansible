@@ -44,7 +44,7 @@ for i in "${!ENTRIES[@]}"; do
     PYTHON_VERSION=${PYTHON_VERSIONS[i]}
 
     echo "Setting up Python $PYTHON_VERSION for $ENTRY..."
-    
+
     if command -v pyenv > /dev/null; then
         pyenv install -s "$PYTHON_VERSION"
         pyenv local "$PYTHON_VERSION"
@@ -52,7 +52,7 @@ for i in "${!ENTRIES[@]}"; do
         echo "pyenv is not installed. Please install Python $PYTHON_VERSION manually"
         exit 1
     fi
-    
+
     if [ "$PYTHON_VERSION" = "3.9" ]; then
         python3 -m install tox-ansible==24.2.0
     else
