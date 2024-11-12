@@ -24,7 +24,7 @@ echo "Setting up Python 3.11"
 pyenv install -s 3.11
 pyenv global 3.11
 python3 -m pip install --upgrade pip
-python3 -m pip install --user ../.
+python3 -m pip install ../.
 python3 -m pip install --user ansible-creator
 
 # Create a collection
@@ -33,9 +33,13 @@ cd example
 ansible-creator init collection "$COLLECTION_NAME"
 git add .
 
+ls -lrt
+
 # Generate matrix with tox
 echo "Generating matrix..."
 MATRIX=$(python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini)
+
+echo "$MATRIX"
 
 # Parse JSON to create arrays for entries
 ENTRIES=($(echo "$MATRIX" | jq -r '.[] | .name'))
