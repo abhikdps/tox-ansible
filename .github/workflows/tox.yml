@@ -22,38 +22,11 @@ jobs:
       max_python: "3.13"
       jobs_producing_coverage: 8
 
-  tox-matrix:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{github.event.pull_request.head.ref}}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install tox-ansible, includes tox
-        run: python3 -m pip install .
-
-      - name: Generate matrix
-        id: generate-matrix
-        working-directory: tests/fixtures/unit/test_type
-        run: |
-          python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini
-
-    outputs:
-      envlist: ${{ steps.generate-matrix.outputs.envlist }}
-
-  test:
-    needs: tox-matrix
+  integration:
+    # needs: tox
     strategy:
       fail-fast: false
-      matrix:
-        entry: ${{ fromJson(needs.tox-matrix.outputs.envlist) }}
-    name: ${{ matrix.entry.name }}
+    name: integration
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,38 +34,26 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
 
-      - name: Install tox-ansible, includes tox
-        run: python3 -m pip install .
-
-      - name: Set up Python for testing
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.entry.python }}
-
-      - name: Make script executable
+      - name: Make test script executable
         working-directory: tools
-        run: chmod +x create_collection.sh
-
-      - name: Run Collection creation script
-        working-directory: tools
-        run: ./create_collection.sh example.broken
+        run: chmod +x test_all.sh
 
       - name: Run tox test
         working-directory: tools
-        run: python3 -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
+        run: ./test_all.sh foo.bar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   test_passed:
-    needs: test
+    needs: integration
     runs-on: ubuntu-latest
     steps:
       - run: >-
           python -c "assert set([
-          '${{ needs.test.result }}',
+          '${{ needs.integration.result }}',
           ]) == {'success'}"
