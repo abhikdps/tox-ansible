@@ -31,7 +31,7 @@ python3 -m pip install --user ansible-creator
 mkdir example
 cd example
 ansible-creator init collection "$COLLECTION_NAME"
-# git add .
+git add .
 
 python3 -m tox --ansible -e integration-py3.11-2.16 --conf tox-ansible.ini
 
