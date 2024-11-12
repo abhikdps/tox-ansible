@@ -70,7 +70,7 @@ jobs:
 
       - name: Run tox test
         working-directory: tools
-        run: ./test_all.sh foo.bar ${{ needs.tox-matrix.outputs.envlist }}
+        run: ./test_all.sh foo.bar '${{ needs.tox-matrix.outputs.envlist }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
