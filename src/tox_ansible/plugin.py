@@ -42,6 +42,7 @@ ALLOWED_EXTERNALS = [
     "ls",
 ]
 ENV_LIST = """
+{integration, sanity, unit}-py3.9-{2.15}
 {integration, sanity, unit}-py3.10-{2.15, 2.16, 2.17}
 {integration, sanity, unit}-py3.11-{2.15, 2.16, 2.17, 2.18, milestone, devel}
 {integration, sanity, unit}-py3.12-{2.16, 2.17, 2.18, milestone, devel}
