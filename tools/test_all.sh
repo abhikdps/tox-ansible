@@ -33,14 +33,11 @@ cd example
 ansible-creator init collection "$COLLECTION_NAME"
 # git add .
 
+python3 -m tox --ansible -e integration-py3.11-2.16 --conf tox-ansible.ini
+
 # Generate matrix with tox
 echo "Generating matrix..."
-pwd
-python3 --version
-python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini
-echo $?
 MATRIX=$(python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini)
-
 
 echo "matrix: $MATRIX"
 
