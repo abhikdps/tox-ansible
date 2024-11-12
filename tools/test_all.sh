@@ -38,9 +38,6 @@ git add .
 if [[ -z "$MATRIX" ]]; then
     echo "Generating matrix..."
     MATRIX=$(python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini)
-    echo "matrix: $MATRIX"
-else
-    echo "matrix: $MATRIX"
 fi
 
 # Parse JSON to create arrays for entries
