@@ -31,7 +31,7 @@ python3 -m pip install --user ansible-creator
 mkdir example
 cd example
 ansible-creator init collection "$COLLECTION_NAME"
-git add .
+# git add .
 
 ls -lrt
 
@@ -64,7 +64,7 @@ for i in "${!ENTRIES[@]}"; do
     fi
 
     if [ "$PYTHON_VERSION" = "3.9" ]; then
-        python3 -m install tox-ansible==24.2.0
+        python3 -m pip install tox-ansible==24.2.0
     else
         python3 -m pip install ../../.
     fi
