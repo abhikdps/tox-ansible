@@ -6,6 +6,14 @@ set -e
 # ARGUMENTS
 COLLECTION_NAME=$1
 
+# Install pyenv if not present
+if command -v pyenv > /dev/null; then
+    curl https://pyenv.run | bash
+else
+    echo "pyenv is not installed. Please install pyenv"
+    exit 1
+fi
+
 # Set up Python 3.11
 echo "Setting up Python 3.11"
 pyenv install -s 3.11
