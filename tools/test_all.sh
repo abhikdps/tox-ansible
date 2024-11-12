@@ -7,10 +7,11 @@ set -e
 COLLECTION_NAME=$1
 
 # Install pyenv if not present
-if command -v pyenv > /dev/null; then
+if ! command -v pyenv > /dev/null; then
+    echo "pyenv is not installed. Installing pyenv..."
     curl https://pyenv.run | bash
 else
-    echo "pyenv is not installed. Please install pyenv"
+    echo "pyenv is installed. Moving forward..."
     exit 1
 fi
 
