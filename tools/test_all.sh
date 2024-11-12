@@ -33,13 +33,16 @@ cd example
 ansible-creator init collection "$COLLECTION_NAME"
 # git add .
 
-ls -lrt
-
 # Generate matrix with tox
 echo "Generating matrix..."
+pwd
+python3 --version
+python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini
+echo $?
 MATRIX=$(python3 -m tox --ansible --gh-matrix --conf tox-ansible.ini)
 
-echo "$MATRIX"
+
+echo "matrix: $MATRIX"
 
 # Parse JSON to create arrays for entries
 ENTRIES=($(echo "$MATRIX" | jq -r '.[] | .name'))
