@@ -23,10 +23,9 @@ eval "$(pyenv init -)"
 echo "Setting up Python 3.11"
 pyenv install -s 3.11
 pyenv global 3.11
-export PATH="$(pyenv root)/shims:$PATH"
 python3 -m pip install --upgrade pip
-python3 -m pip install ../.
-python3 -m pip install ansible-creator
+python3 -m pip install --user ../.
+python3 -m pip install --user ansible-creator
 
 # Create a collection
 mkdir example
