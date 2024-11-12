@@ -10,6 +10,9 @@ COLLECTION_NAME=$1
 if ! command -v pyenv > /dev/null; then
     echo "pyenv is not installed. Installing pyenv..."
     curl https://pyenv.run | bash
+    echo -e "export PYENV_ROOT=\"$HOME/.pyenv\"\nexport PATH=\"$PYENV_ROOT/bin:$PATH\"" >> ~/.bashrc
+    echo -e "eval \"$(pyenv init --path)\"\neval \"$(pyenv init -)\"" >> ~/.bashrc
+    exec "$SHELL"
 else
     echo "pyenv is installed. Moving forward..."
     exit 1
