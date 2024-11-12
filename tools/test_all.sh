@@ -12,11 +12,14 @@ if ! command -v pyenv > /dev/null; then
     curl https://pyenv.run | bash
     echo -e "export PYENV_ROOT=\"$HOME/.pyenv\"\nexport PATH=\"$PYENV_ROOT/bin:$PATH\"" >> ~/.bashrc
     echo -e "eval \"$(pyenv init --path)\"\neval \"$(pyenv init -)\"" >> ~/.bashrc
-    exec "$SHELL"
 else
     echo "pyenv is installed. Moving forward..."
     exit 1
 fi
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
 
 # Set up Python 3.11
 echo "Setting up Python 3.11"
